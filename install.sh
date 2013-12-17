@@ -10,11 +10,11 @@ repositories_initialization () {
   pip install -r "$TOP_DIR""/requirements.txt"
   for MODULE in "${MODULES[@]}"
   do
+    deactivate
     cd "$TOP_DIR"
     git clone "https://github.com/RulzUrLife/""$MODULE"
     cd "$MODULE"
-    mkvirtualenv "$MODULE"
-    pip install -r "requirements.txt"
+    bash install.sh
   done
 }
 

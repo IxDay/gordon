@@ -3,7 +3,11 @@ set -e
 
 PROJECT="RulzUrArch"
 
-command -v git > /dev/null || brew install git 2> /dev/null || sudo apt-get install -y git
+command -v git > /dev/null || ( echo "git is not installed, aborting..." && exit 1 )
+command -v vagrant > /dev/null || ( echo "vagrant is not installed, aborting..." && exit 1 )
+
 git clone "https://github.com/RulzUrLife/""$PROJECT"
 cd "$PROJECT"
-./install.sh
+
+vagrant up
+vagrant ssh -c /vagrant/install.sh

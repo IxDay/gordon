@@ -3,6 +3,12 @@
 
 $install_script = <<INSTALL_SCRIPT
 apt-get install -y vim git
+
+echo "[core]"           >> /vagrant/.gitconfig
+echo "    editor = vim" >> /vagrant/.gitconfig
+echo "[color]"          >> /vagrant/.gitconfig
+echo "    ui = always"  >> /vagrant/.gitconfig
+
 INSTALL_SCRIPT
 
 # A script to upgrade from the 12.04 kernel to the raring backport kernel (3.8)

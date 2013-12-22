@@ -2,12 +2,8 @@
 # vi: set ft=ruby :
 
 $install_script = <<INSTALL_SCRIPT
-apt-get install -y vim git
 
-echo "[core]"           >> /vagrant/.gitconfig
-echo "    editor = vim" >> /vagrant/.gitconfig
-echo "[color]"          >> /vagrant/.gitconfig
-echo "    ui = always"  >> /vagrant/.gitconfig
+apt-get install -y vim git curl
 
 INSTALL_SCRIPT
 

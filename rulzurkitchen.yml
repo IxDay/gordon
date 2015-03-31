@@ -1,0 +1,10 @@
+rulzurdb:
+    extends:
+        file: rulzurkitchen-base.yml
+        service: rulzurdb
+rulzurapi:
+    extends:
+        file: rulzurkitchen-base.yml
+        service: rulzurapi
+    links: 
+        - rulzurdb

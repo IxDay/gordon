@@ -1,0 +1,27 @@
+rulzurdb:
+    extends:
+        file: rulzurkitchen-base.yml
+        service: rulzurdb
+
+rulzurdbwatcher:
+    extends:
+        file: rulzurkitchen-base.yml
+        service: rulzurdb
+    links:
+        - rulzurdb
+    volumes:
+        - ./RulzUrDB/utils:/mnt
+    working_dir: /mnt
+    command: /bin/bash
+    stdin_open: true
+    tty: true
+
+rulzurapi:
+    extends:
+        file: rulzurkitchen-base.yml
+        service: rulzurapi
+    links: 
+        - rulzurdb
+    command: /bin/bash
+    stdin_open: true
+    tty: true

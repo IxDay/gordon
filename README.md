@@ -5,6 +5,10 @@ This repo contains the tools for the RulzUrKitchen project
 The deployement of the RulzUrKitchen development architecture is based on
 Docker Compose.
 
+## Requirements
+
+* libyaml-dev
+
 ## How to
 
 * install docker [link here](https://docs.docker.com/installation/),

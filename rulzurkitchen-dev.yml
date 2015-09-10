@@ -20,7 +20,9 @@ rulzurapi:
     extends:
         file: rulzurkitchen-base.yml
         service: rulzurapi
-    links: 
+    environment:
+        - DEBUG=1
+    links:
         - rulzurdb
     command: /bin/bash
     stdin_open: true

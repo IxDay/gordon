@@ -1,6 +1,8 @@
 rulzurdb:
+    hostname: "rulzurdb"
     build: ./RulzUrDB
 rulzurapi:
+    hostname: "rulzurapi"
     build: ./RulzUrAPI
     volumes:
         - ./RulzUrAPI:/opt/rulzurapi

@@ -8,3 +8,4 @@ rulzurapi:
         - ./RulzUrAPI:/opt/rulzurapi
     ports:
         - "5000:5000"
+

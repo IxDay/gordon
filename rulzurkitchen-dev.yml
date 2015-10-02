@@ -15,7 +15,13 @@ rulzurdbwatcher:
     command: /bin/bash
     stdin_open: true
     tty: true
-
+rulzurfront:
+    build: ./RulzUrFront
+    volumes:
+        - ./RulzUrFront/:/mnt/
+    command: /bin/bash
+    stdin_open: true
+    tty: true
 rulzurapi:
     extends:
         file: rulzurkitchen-base.yml
@@ -24,6 +30,10 @@ rulzurapi:
         - DEBUG=1
     links:
         - rulzurdb
+    volumes_from:
+        - rulzurfront
+    volumes:
+        - ./RulzUrFront/dist:/opt/rulzurapi/src/api/static
     command: /bin/bash
     stdin_open: true
     tty: true

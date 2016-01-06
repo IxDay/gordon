@@ -1,0 +1,39 @@
+db:
+    extends:
+        file: base.yml
+        service: db
+    ports:
+        - "5432:5432"
+
+dbwatcher:
+    extends:
+        file: base.yml
+        service: db
+    links:
+        - db
+    volumes:
+        - ./RulzUrDB:/mnt
+    working_dir: /mnt
+    command: /bin/bash
+    stdin_open: true
+    tty: true
+
+front:
+    build: ./RulzUrFront
+    volumes:
+        - ./RulzUrFront:/mnt/
+    command: /bin/bash
+    stdin_open: true
+    tty: true
+
+api:
+    extends:
+        file: base.yml
+        service: api
+    links:
+        - db
+    volumes:
+        - ./RulzUrFront/dist:/opt/rulzurapi/src/api/base/static
+    command: /bin/bash
+    stdin_open: true
+    tty: true

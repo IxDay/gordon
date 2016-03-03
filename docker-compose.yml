@@ -1,0 +1,33 @@
+version: "2"
+services:
+  db:
+    ports:
+        - "5432:5432"
+    build:
+      context: .
+      dockerfile: dockerfiles/Dockerfile-DB
+      args:
+        - PASSWORD=${DB_PASSWORD}
+  dbwatcher:
+    volumes:
+      - ./rulzurdb:/mnt/
+    links:
+      - db
+    build:
+      context: .
+      dockerfile: dockerfiles/Dockerfile-DBwatcher
+      args:
+        - PASSWORD=${DB_PASSWORD}
+  api:
+    volumes:
+      - ./rulzurapi:/opt/rulzurapi
+    links:
+      - db
+    ports:
+      - "5000:5000"
+    command: /bin/bash
+    stdin_open: true
+    tty: true
+    build:
+      context: .
+      dockerfile: dockerfiles/Dockerfile-API

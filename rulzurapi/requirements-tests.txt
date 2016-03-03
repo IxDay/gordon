@@ -1,0 +1,4 @@
+ipdb
+pytest
+pylint>=1.4.5
+pytest-cov

@@ -1,0 +1,28 @@
+# rulzurapi
+#
+# VERSION               0.0.1
+
+FROM       debian:testing
+MAINTAINER Maxime Vidori <maxime.vidori@gmail.com>
+
+RUN apt-get update && \
+    apt-get install -y python3.4 python3-pip libpq-dev && \
+    apt-get clean
+
+COPY rulzurapi/requirements.txt /opt/requirements/
+COPY rulzurapi/requirements-tests.txt /opt/requirements/
+COPY rulzurapi/misc/default_app.py /opt/rulzurapi/src/app.py
+
+ENV PYTHONDONTWRITEBYTECODE 1
+
+ENV WORKDIR /opt/rulzurapi
+ENV PYTHONPATH ${WORKDIR}/src
+
+RUN pip3 install -r /opt/requirements/requirements.txt
+RUN pip3 install -r /opt/requirements/requirements-tests.txt
+
+EXPOSE 5000
+
+WORKDIR ${WORKDIR}
+
+CMD ["/usr/bin/python3", "src/app.py"]

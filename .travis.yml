@@ -1,0 +1,24 @@
+language: python
+
+python:
+  - "3.4"
+
+services:
+  - postgresql
+addons:
+    postgresql: "9.4"
+env:
+  - RULZURAPI_SETTINGS_FILE="$TRAVIS_BUILD_DIR/rulzurapi/test/settings_travis.py"
+
+before_install:
+  - cd rulzurapi
+install:
+  - pip install -e .
+  - pip install -r requirements-tests.txt
+
+before_script:
+  - ../rulzurdb/travis.sh
+
+script:
+  - pylint -r n $(cat misc/pylint_files)
+  - py.test -v --tb=line

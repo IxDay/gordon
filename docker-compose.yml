@@ -21,6 +21,7 @@ services:
   api:
     volumes:
       - ./rulzurapi:/opt/rulzurapi
+      - ./rulzurfront/dist:/opt/rulzurapi/src/api/base/static
     links:
       - db
     ports:
@@ -31,3 +32,9 @@ services:
     build:
       context: .
       dockerfile: dockerfiles/Dockerfile-API
+  front:
+    volumes:
+      - ./rulzurfront:/opt/rulzurfront
+    build:
+      context: .
+      dockerfile: dockerfiles/Dockerfile-Front

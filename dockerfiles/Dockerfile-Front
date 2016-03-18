@@ -5,12 +5,13 @@
 FROM       debian:testing
 MAINTAINER Maxime Vidori <maxime.vidori@gmail.com>
 
-RUN apt-get update
-RUN apt-get upgrade -y
+RUN apt-get update && \
+    apt-get install -y nodejs npm && \
+    apt-get clean
 
-RUN apt-get install -y nodejs npm
 RUN ln -s /usr/bin/nodejs /usr/local/bin/node
 
 RUN npm install -g gulp
-WORKDIR /mnt/
 
+WORKDIR /opt/rulzurfront
+ENTRYPOINT ["gulp"]

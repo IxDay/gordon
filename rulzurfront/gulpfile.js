@@ -16,7 +16,7 @@ gulp.task('styles', function () {
   .pipe(sourcemaps.init())
   .pipe(concat('main.css'))
   .pipe(sourcemaps.write())
-  .pipe(gulp.dest('dist/css'));
+  .pipe(gulp.dest('dist'));
 
 });
 
@@ -25,7 +25,7 @@ gulp.task('scripts', function () {
   .pipe(sourcemaps.init())
   .pipe(concat('main.js'))
   .pipe(sourcemaps.write())
-  .pipe(gulp.dest('dist/js'));
+  .pipe(gulp.dest('dist'));
 });
 
 gulp.task('sass:watch', function () {

@@ -114,4 +114,4 @@ def create_app(conf=None):
 
 
 if __name__ == "__main__":
-    create_app().run(host='0.0.0.0', use_reloader=False)
+    create_app().run(host='0.0.0.0')

@@ -2,28 +2,29 @@
 
 {% block content %}
 <div class="recipe">
-  <h1>{{recipe.name}}</h1>
-  <section class="recipe-desc">
-    <div class="recipe-metadata">
-      <div>category: {{recipe.category}}</div>
-      <div>duration: {{recipe.duration}}</div>
-      <div>difficulty: {{recipe.difficulty}}</div>
-      <div style="clear: both"></div>
+  <h1 class="center">{{recipe.name}}</h1>
+  <section class="description">
+    <div class="col1of1 m1y metadata">
+      <div class="col1of3 text-right">category: {{recipe.category}}</div>
+      <div class="col1of3 center">duration: {{recipe.duration}}</div>
+      <div class="col1of3 demo">difficulty: {{recipe.difficulty}}</div>
     </div>
+    <p class="col1of1 m1y center">
     The recipe desc come here.
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem lacinia consectetur. Donec ut libero sed arcu vehicula ultricies a non tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut gravida lorem. Ut turpis felis,
 pulvinar a semper sed, adipiscing id dolor. Pellentesque auctor nisi id magna consequat sagittis.
+</p>
   </section>
-  <section class="two-columns">
+  <section class="col1of1 m1y ingredients">
     {% set pivot = (recipe.ingredients|length / 2 )|round|int %}
-    <div class="left">
+    <div class="col1of2">
       <ul>
       {% for ingredient in recipe.ingredients[:pivot] %}
         <li>{{ingredient.quantity}} {{ingredient.measurement}} {{ingredient.name}}</li>
       {% endfor %}
       </ul>
     </div>
-    <div class="right">
+    <div class="col1of2">
       <ul>
       {% for ingredient in recipe.ingredients[pivot:] %}
         <li>{{ingredient.quantity}} {{ingredient.measurement}} {{ingredient.name}}</li>
@@ -31,17 +32,16 @@ pulvinar a semper sed, adipiscing id dolor. Pellentesque auctor nisi id magna co
       </ul>
     </div>
   </section>
-  <div style="clear: both">
-  <section class="two-columns">
+  <section class="col1of1 m1y utensils">
     {% set pivot = (recipe.utensils|length / 2 )|round|int %}
-    <div class="left">
+    <div class="col1of2">
       <ul>
       {% for utensil in recipe.utensils[:pivot] %}
         <li>{{utensil.name}}</li>
       {% endfor %}
       </ul>
     </div>
-    <div class="right">
+    <div class="col1of2">
       <ul>
       {% for utensil in recipe.utensils[pivot:] %}
         <li>{{utensil.name}}</li>
@@ -50,11 +50,10 @@ pulvinar a semper sed, adipiscing id dolor. Pellentesque auctor nisi id magna co
     </div>
   </section>
 
-  <div style="clear: both">
-  <article class="directions">
-    {% for dir_title, dir in recipe.directions.items() %}
+  <article class="col1of1 m1y directions">
+    {% for direction in recipe.directions %}
     <section class="direction">
-      {{dir_title}}: {{dir}}
+      {{direction.title}}: {{direction.text}}
     </section>
     {% endfor %}
   </article>

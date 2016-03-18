@@ -20,6 +20,10 @@ gulp.task('styles', function () {
 
 });
 
+gulp.task('fonts', function() {
+  return gulp.src('src/fonts/**').pipe(gulp.dest('dist/fonts'));
+});
+
 gulp.task('scripts', function () {
   return gulp.src('src/scripts/**/*.js')
   .pipe(sourcemaps.init())
@@ -40,4 +44,4 @@ gulp.task('test', function () {
   // do nothing...
 });
 
-gulp.task('build', sequence('clean', ['styles', 'scripts']));
+gulp.task('build', sequence('clean', ['styles', 'scripts', 'fonts']));

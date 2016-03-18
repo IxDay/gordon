@@ -1,0 +1,57 @@
+// =============================================================================
+// String Replace
+// =============================================================================
+
+@function str-replace($string, $search, $replace: "") {
+  $index: str-index($string, $search);
+
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+  }
+
+  @return $string;
+}
+
+// =============================================================================
+// Font Face
+// =============================================================================
+
+@mixin font-face($name, $path, $weight: null, $style: null, $exts: eot woff ttf svg) {
+  $src: null;
+
+  $extmods: (
+    eot: "?",
+    svg: "#" + str-replace($name, " ", "_")
+  );
+
+  $formats: (
+    otf: "opentype",
+    ttf: "truetype"
+  );
+
+  @each $ext in $exts {
+    $extmod: if(map-has-key($extmods, $ext), $ext + map-get($extmods, $ext), $ext);
+    $format: if(map-has-key($formats, $ext), map-get($formats, $ext), $ext);
+    $src: append($src, url(quote($path + "." + $extmod)) format(quote($format)), comma);
+  }
+
+  @font-face {
+    font-family: quote($name);
+    font-style: $style;
+    font-weight: $weight;
+    src: $src;
+  }
+}
+
+@include font-face("PT Serif", "fonts/ptserif/PTSerif-Regular");
+@include font-face("PT Serif", "fonts/ptserif/PTSerif-Bold", bold);
+@include font-face("PT Serif", "fonts/ptserif/PTSerif-Italic", null, italic);
+@include font-face("PT Serif", "fonts/ptserif/PTSerif-BoldItalic", bold, italic);
+
+@include font-face("Oswald", "fonts/oswald/Oswald-Regular");
+@include font-face("Oswald", "fonts/oswald/Oswald-Bold", bold);
+@include font-face("OswaldLight", "fonts/oswald/Oswald-Light");
+
+@include font-face("Lato", "fonts/lato/Lato-Regular", null, null, eot ttf woff woff2);
+@include font-face("Lato", "fonts/lato/Lato-Bold", bold, null, eot ttf woff woff2);
+@include font-face("LatoLight", "fonts/lato/Lato-Light", null, null, eot ttf woff woff2);

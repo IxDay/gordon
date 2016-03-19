@@ -24,7 +24,7 @@ def app():
     Read the settings files in order to see available options.
     """
     if 'LASAGNA_SETTINGS' not in os.environ:
-        os.environ['LASAGNA_SETTINGS'] = 'test.settings'
+        os.environ['LASAGNA_SETTINGS'] = 'tests.settings'
     return app_builder.create_app()
 
 

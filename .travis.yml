@@ -8,16 +8,16 @@ services:
 addons:
     postgresql: "9.4"
 env:
-  - LASAGNA_SETTINGS_FILE="$TRAVIS_BUILD_DIR/lasagna/test/settings_travis.py"
+  - LASAGNA_SETTINGS_FILE="$TRAVIS_BUILD_DIR/lasagna/tests/settings_travis.py"
 
 before_install:
   - cd lasagna
 install:
-  - pip install -e .
+  - pip install -e .[tests]
 
 before_script:
   - ../potato/travis.sh
 
 script:
-  - python setup.py coverage
-  - python setup.py test
+  - flake8 lasagna tests
+  - py.test -v --tb=line

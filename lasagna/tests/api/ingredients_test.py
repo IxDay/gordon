@@ -1,7 +1,7 @@
 import pytest
 
 import lasagna.db.models as models
-import test.api.utils as utils
+import tests.api.utils as utils
 
 
 @pytest.fixture

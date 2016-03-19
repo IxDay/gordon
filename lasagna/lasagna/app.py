@@ -55,7 +55,7 @@ def create_app(conf=None):
     app = Flask(__name__, static_folder=None)
 
     app.config.from_object('lasagna.settings')
-    app.config.from_pyfile('lasagna.local_settings.py', silent=True)
+    app.config.from_pyfile('local_settings.py', silent=True)
     app.config.from_object(os.environ.get('LASAGNA_SETTINGS', None))
     app.config.from_envvar('LASAGNA_SETTINGS_FILE', silent=True)
     app.config.update(conf)
@@ -110,7 +110,3 @@ def create_app(conf=None):
     app.register_blueprint(recipes.blueprint, url_prefix='/recipes')
     app.register_blueprint(ingredients.blueprint, url_prefix='/ingredients')
     return app
-
-
-if __name__ == "__main__":
-    create_app().run(host='0.0.0.0')

@@ -33,9 +33,14 @@ setuptools.setup(
             'flake8',
         ],
         'dev': [
-            'ipdb'
+            'ipdb',
+            'click'
         ]
     },
+    entry_points='''
+        [console_scripts]
+        lasagna=lasagna.cli:main
+    ''',
     url='https://github.com/IxDay/gordon',
     license='MIT',
     classifiers=[

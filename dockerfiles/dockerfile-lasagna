@@ -9,6 +9,9 @@ RUN apt-get update && \
     apt-get install -y python3.4 python3-pip libpq-dev && \
     apt-get clean
 
+ENV LC_ALL "C.UTF-8"
+ENV LANG "C.UTF-8"
+
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV WORKDIR /opt/lasagna
 
@@ -16,4 +19,4 @@ EXPOSE 5000
 
 WORKDIR ${WORKDIR}
 
-CMD ["/usr/bin/python3", "src/app.py"]
+CMD ["/usr/bin/python3", "lasagna/app.py"]

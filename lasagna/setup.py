@@ -108,7 +108,6 @@ setuptools.setup(
         'marshmallow>=2.0.0'
     ],
     tests_require=[
-        'ipdb',
         'pytest-cov',
         'pytest',
         'flake8',

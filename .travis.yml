@@ -14,11 +14,10 @@ before_install:
   - cd lasagna
 install:
   - pip install -e .
-  - pip install -r requirements-tests.txt
 
 before_script:
   - ../potato/travis.sh
 
 script:
-  - pylint -r n $(cat misc/pylint_files)
-  - py.test -v --tb=line
+  - python setup.py coverage
+  - python setup.py test

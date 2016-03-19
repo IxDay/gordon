@@ -4,7 +4,7 @@ import re
 import peewee
 import playhouse
 
-import utils.helpers as helpers # pylint: disable=no-name-in-module
+import lasagna.utils.helpers as helpers
 
 class EnumField(peewee.Field):
     """Enum field

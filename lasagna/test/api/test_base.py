@@ -1,4 +1,4 @@
-
+# pylint: disable=missing-docstring
 
 def test_index(client):
     res = client.get('/', headers={'Accept': 'text/html'})

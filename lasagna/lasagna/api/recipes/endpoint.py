@@ -2,14 +2,14 @@
 import flask
 import peewee
 
-import db
-import db.models as models
-import db.utils
-import db.helpers as db_helpers
+import lasagna.db as db
+import lasagna.db.models as models
+import lasagna.db.utils as db_utils
+import lasagna.db.helpers as db_helpers
 
-import utils.helpers as helpers
-import utils.schemas as schemas
-import utils.exceptions as exc
+import lasagna.utils.helpers as helpers
+import lasagna.utils.schemas as schemas
+import lasagna.utils.exceptions as exc
 
 blueprint = flask.Blueprint('recipes', __name__, template_folder='templates')
 
@@ -24,7 +24,7 @@ def recipes_get():
 
 
 @blueprint.route('', methods=['POST'])
-@db.utils.lock(models.Utensil, models.Ingredient)
+@db_utils.lock(models.Utensil, models.Ingredient)
 def recipes_post():
     """Create a recipe"""
     recipe = helpers.raise_or_return(schemas.recipe.post)
@@ -47,7 +47,7 @@ def recipes_post():
 
 
 @blueprint.route('', methods=['PUT'])
-@db.utils.lock(models.Utensil, models.Ingredient)
+@db_utils.lock(models.Utensil, models.Ingredient)
 def recipes_put():
     """Update multiple recipes"""
     recipes = helpers.raise_or_return(schemas.recipe.put, True)
@@ -68,7 +68,7 @@ def recipe_get(recipe_id):
 
 
 @blueprint.route('/<int:recipe_id>', methods=['PUT'])
-@db.utils.lock(models.Utensil, models.Ingredient)
+@db_utils.lock(models.Utensil, models.Ingredient)
 def recipe_put(recipe_id):
     """Update a specified recipe"""
     recipe = helpers.raise_or_return(schemas.recipe.put)

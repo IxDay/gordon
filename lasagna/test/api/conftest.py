@@ -1,3 +1,4 @@
+# pylint: disable=missing-docstring, redefined-outer-name
 import pytest
 
 def utensil_post(client, data):

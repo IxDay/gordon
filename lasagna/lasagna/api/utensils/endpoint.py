@@ -2,17 +2,18 @@
 import flask
 import peewee
 
-import db
-import db.models as models
-import db.helpers as db_helpers
-import utils.helpers
-import utils.schemas as schemas
-import utils.exceptions as exc
+import lasagna.db as db
+import lasagna.db.models as models
+import lasagna.db.helpers as db_helpers
+
+import lasagna.utils.helpers as helpers
+import lasagna.utils.schemas as schemas
+import lasagna.utils.exceptions as exc
 
 blueprint = flask.Blueprint('utensils', __name__, template_folder='templates')
 
 @blueprint.route('')
-@utils.helpers.template({'text/html': 'utensils.html'})
+@helpers.template({'text/html': 'utensils.html'})
 def utensils_get():
     """List all utensils"""
     utensils = models.Utensil.select().dicts()
@@ -23,7 +24,7 @@ def utensils_get():
 @db.database.atomic()
 def utensils_post():
     """Create an utensil"""
-    utensil = utils.helpers.raise_or_return(schemas.utensil.post)
+    utensil = helpers.raise_or_return(schemas.utensil.post)
     try:
         utensil = models.Utensil.create(**utensil)
     except peewee.IntegrityError:
@@ -36,7 +37,7 @@ def utensils_post():
 @db.database.atomic()
 def utensils_put():
     """Update multiple utensils"""
-    utensils = utils.helpers.raise_or_return(schemas.utensil.put, True)
+    utensils = helpers.raise_or_return(schemas.utensil.put, True)
     return schemas.utensil.dump(utensils, many=True).data
 
 
@@ -51,7 +52,7 @@ def utensil_get(utensil_id):
 @db.database.atomic()
 def utensil_put(utensil_id):
     """Update the utensil for utensil_id"""
-    utensil = utils.helpers.raise_or_return(schemas.utensil.put)
+    utensil = helpers.raise_or_return(schemas.utensil.put)
     if not utensil:
         raise exc.APIException('no data provided for update')
 

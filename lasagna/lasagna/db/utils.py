@@ -4,7 +4,7 @@ import functools
 
 import peewee
 
-import db
+import lasagna.db as db
 
 
 # pylint: disable=protected-access

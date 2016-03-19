@@ -1,17 +1,16 @@
-import itertools
+# pylint: disable=missing-docstring, redefined-outer-name
 import pytest
-import collections
 
-import db.models
+import lasagna.db.models as models
 import test.api.utils as utils
 
 @pytest.fixture
 def next_utensil_id(next_id):
-    return next_id(db.models.Utensil)
+    return next_id(models.Utensil)
 
 @pytest.fixture
 def next_recipe_id(next_id):
-    return next_id(db.models.Recipe)
+    return next_id(models.Recipe)
 
 
 @pytest.fixture
@@ -221,10 +220,10 @@ def recipe_invalid(utensils, ingredients):
         },
         'ingredients': {
             '0': {
-               '_': utils.FULLFIL,
-               'name': [utils.MISSING],
-               'measurement': [utils.MISSING],
-               'quantity': [utils.MISSING]
+                '_': utils.FULLFIL,
+                'name': [utils.MISSING],
+                'measurement': [utils.MISSING],
+                'quantity': [utils.MISSING]
             },
             '1': {
                 'id': [
@@ -280,6 +279,7 @@ def recipe_invalids(recipe_invalid, next_utensil_id):
     }
     return [recipe_invalid, recipe_invalid_2]
 
+# pylint: disable=arguments-differ, unused-variable
 class TestRecipes(utils.TestEndpoint):
     endpoint = 'recipes'
     E_404 = 'recipe not found'
@@ -314,7 +314,7 @@ class TestRecipes(utils.TestEndpoint):
         recipe_1['name'] = 'foo'
         recipe_1['utensils'] = []
         recipe_1['directions'].append(
-            {'title': 'step_3','text': 'instruction recipe 1 step 3'}
+            {'title': 'step_3', 'text': 'instruction recipe 1 step 3'}
         )
 
         ingrs = recipe_1.pop('ingredients')
@@ -351,38 +351,42 @@ class TestRecipes(utils.TestEndpoint):
         super(TestRecipes, self).test_put(client, recipe, {'recipe': expected})
 
     def test_put_invalid(self, client, recipe_invalid, recipe):
-        data, errors = recipe_invalid
+        data, errs = recipe_invalid
         data['id'] = recipe['id']
-        super(TestRecipes, self).test_put_invalid(client, [data], {'0': errors})
+        super(TestRecipes, self).test_put_invalid(client, [data], {'0': errs})
 
     def test_put_404(self, client, next_recipe_id):
         recipe = {'id': next_recipe_id()}
         super(TestRecipes, self).test_put_404(client, recipe)
 
     def test_get_ingredients_404(self, client, next_recipe_id):
-        res = client.get(utils.urlize(self.endpoint, next_recipe_id(), 'ingredients'))
+        res = client.get(
+            utils.urlize(self.endpoint, next_recipe_id(), 'ingredients')
+        )
 
         assert res.status_code == 404
         assert res.data == {'status_code': 404, 'message': self.E_404}
 
 
     def test_get_ingredients(self, client, recipe):
-        id = recipe['id']
-        res = client.get(utils.urlize(self.endpoint, id, 'ingredients'))
+        r_id = recipe['id']
+        res = client.get(utils.urlize(self.endpoint, r_id, 'ingredients'))
 
         assert res.status_code == 200
         assert res.data == {'ingredients': recipe['ingredients']}
 
     def test_get_utensils_404(self, client, next_recipe_id):
-        res = client.get(utils.urlize(self.endpoint, next_recipe_id(), 'utensils'))
+        res = client.get(
+            utils.urlize(self.endpoint, next_recipe_id(), 'utensils')
+        )
 
         assert res.status_code == 404
         assert res.data == {'status_code': 404, 'message': self.E_404}
 
 
     def test_get_utensils(self, client, recipe):
-        id = recipe['id']
-        res = client.get(utils.urlize(self.endpoint, id, 'utensils'))
+        r_id = recipe['id']
+        res = client.get(utils.urlize(self.endpoint, r_id, 'utensils'))
 
         assert res.status_code == 200
         assert res.data == {'utensils': recipe['utensils']}

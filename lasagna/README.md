@@ -13,8 +13,8 @@ The application API, this API will be public and used by the frontend.
 
 # Running tests
 
-`py.test -vvv --tb=line --cov=src/`
-`py.test -vvv --tb=line --cov=src/ --cov-report=html`
+`py.test -vvv --tb=line --cov=lasagna/`
+`py.test -vvv --tb=line --cov=lasagna/ --cov-report=html`
 `pylint -r n $(cat misc/pylint_files)`
 
 

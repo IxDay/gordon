@@ -1,14 +1,16 @@
-import db.models as models
+# pylint: disable=missing-docstring, redefined-outer-name
+import pytest
+
+import lasagna.db.models as models
 import test.api.utils as utils
 
-import pytest
-import collections
 
 @pytest.fixture
 def next_id(next_id):
     return next_id(models.Ingredient)
 
 
+# pylint: disable=arguments-differ, unused-variable
 class TestIngredients(utils.TestSubEndpoint):
     endpoint = 'ingredients'
     E_404 = 'ingredient not found'
@@ -77,20 +79,9 @@ class TestIngredients(utils.TestSubEndpoint):
 
 
     def test_get_recipes(self, client, recipes, ingredients):
-        res = client.get(
-            utils.urlize(self.endpoint, ingredients[0]['id'], 'recipes')
-        )
-        for recipe in res.data['recipes']:
-            utils.unorder_recipe(recipe)
-
-        assert res.status_code == 200
-        assert res.data == {'recipes': [utils.unorder_recipe(recipes[0])]}
-
-
-    def test_get_recipes(self, client, recipes, ingredients):
         expected = {'recipes': [utils.unorder_recipe(recipes[0])]}
-        id =  ingredients[0]['id']
-        super(TestIngredients, self).test_get_recipes(client, id, expected)
+        r_id = ingredients[0]['id']
+        super(TestIngredients, self).test_get_recipes(client, r_id, expected)
 
 
     def test_get_recipes_404(self, client, next_id):

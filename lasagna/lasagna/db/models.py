@@ -6,8 +6,8 @@ Due to non compliance with pylint we have a lot of exception in this file
 """
 import peewee
 
-import db.orm
-import db
+import lasagna.db as db
+import lasagna.db.orm as db_orm
 
 
 #pylint: disable=too-few-public-methods, no-member
@@ -59,13 +59,13 @@ class Recipe(BaseModel):
     """database's recipe table"""
     id = peewee.PrimaryKeyField(sequence='recipe_id_seq')
     name = peewee.CharField()
-    directions = db.orm.ArrayField(db.orm.DirectionField)
+    directions = db_orm.ArrayField(db_orm.DirectionField)
     difficulty = peewee.IntegerField()
-    duration = db.orm.EnumField(choices=[
+    duration = db_orm.EnumField(choices=[
         '0/5', '5/10', '10/15', '15/20', '20/25', '25/30', '30/45', '45/60',
         '60/75', '75/90', '90/120', '120/150'])
     people = peewee.IntegerField()
-    category = db.orm.EnumField(choices=['starter', 'main', 'dessert'])
+    category = db_orm.EnumField(choices=['starter', 'main', 'dessert'])
 
 
 #pylint: disable=too-few-public-methods
@@ -82,7 +82,7 @@ class RecipeIngredients(BaseModel):
         db_column='fk_ingredient'
     )
     quantity = peewee.IntegerField()
-    measurement = db.orm.EnumField(choices=['L', 'g', 'oz', 'spoon'])
+    measurement = db_orm.EnumField(choices=['L', 'g', 'oz', 'spoon'])
 
     class Meta(object):
         """ManyToMany relationship for recipe_ingredients

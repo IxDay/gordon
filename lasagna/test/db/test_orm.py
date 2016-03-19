@@ -1,11 +1,12 @@
+# pylint: disable=missing-docstring
 import peewee
 import pytest
 
-import db.orm
+import lasagna.db.orm as db_orm
 
 def test_enum(gen_table):
     class TestTable(peewee.Model):
-        enum = db.orm.EnumField(choices=['foo', 'bar'])
+        enum = db_orm.EnumField(choices=['foo', 'bar'])
 
     test_table = gen_table(TestTable)
     test_table.create(enum='foo')
@@ -16,7 +17,7 @@ def test_enum(gen_table):
 
 def test_invalid_enum(gen_table):
     class TestTable(peewee.Model):
-        enum = db.orm.EnumField(choices=['foo', 'bar'])
+        enum = db_orm.EnumField(choices=['foo', 'bar'])
 
     test_table = gen_table(TestTable)
 
@@ -28,7 +29,7 @@ def test_invalid_enum(gen_table):
 
 def test_direction(gen_table):
     class TestTable(peewee.Model):
-        direction = db.orm.DirectionField()
+        direction = db_orm.DirectionField()
 
     test_table = gen_table(TestTable)
     test_table.create(direction=('title', 'text'))
@@ -41,7 +42,7 @@ def test_direction(gen_table):
 
 def test_array_of_directions(gen_table):
     class TestTable(peewee.Model):
-        directions = db.orm.ArrayField(db.orm.DirectionField)
+        directions = db_orm.ArrayField(db_orm.DirectionField)
 
     test_table = gen_table(TestTable)
 
@@ -57,7 +58,7 @@ def test_array_of_directions(gen_table):
 
 def test_array_of_ints(gen_table):
     class TestTable(peewee.Model):
-        integers = db.orm.ArrayField(peewee.IntegerField)
+        integers = db_orm.ArrayField(peewee.IntegerField)
 
 
     test_table = gen_table(TestTable)
@@ -70,7 +71,7 @@ def test_array_of_ints(gen_table):
 
 def test_array_of_chars(gen_table):
     class TestTable(peewee.Model):
-        chars = db.orm.ArrayField(peewee.CharField)
+        chars = db_orm.ArrayField(peewee.CharField)
 
 
     test_table = gen_table(TestTable)

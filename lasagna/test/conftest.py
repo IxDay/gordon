@@ -6,13 +6,13 @@ import json
 
 import pytest
 
-import app as app_builder
+import lasagna.app as app_builder
 
-import db
-import db.models as models
-import db.utils
+import lasagna.db as db
+import lasagna.db.models as models
+import lasagna.db.utils as db_utils
 
-import utils.helpers
+import lasagna.utils.helpers as helpers
 
 
 @pytest.fixture
@@ -50,7 +50,7 @@ def clean_db(app):
     sequences = [models.Ingredient.id.sequence, models.Utensil.id.sequence,
                  models.Recipe.id.sequence]
     for sequence in sequences:
-        entity = db.utils.parse_entity(db.schema, sequence)
+        entity = db_utils.parse_entity(db.schema, sequence)
         db.database.execute_sql('ALTER SEQUENCE %s RESTART WITH 1' % (entity,))
 
 
@@ -80,7 +80,7 @@ def client(app, clean_db):
             it is loaded as a python dict.
             """
             data = kwargs.get('data')
-            if utils.helpers.is_iterable(data):
+            if helpers.is_iterable(data):
                 kwargs['data'] = json.dumps(data)
 
             headers.update(kwargs.get('headers', {}))
@@ -131,7 +131,7 @@ def next_id(app):
 
     def wrapper(model):
         """Factory which accept a model and gives its next id entry"""
-        entity = db.utils.parse_entity(model._meta.schema, model.id.sequence)
+        entity = db_utils.parse_entity(model._meta.schema, model.id.sequence)
 
         return lambda: db.database.execute_sql(
             'SELECT last_value FROM %s' % (entity,)

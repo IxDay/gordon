@@ -1,14 +1,17 @@
-import db.models as models
-import test.api.utils as utils
+# pylint: disable=missing-docstring, redefined-outer-name
 
 import pytest
-import collections
+
+import lasagna.db.models as models
+import test.api.utils as utils
 
 
 @pytest.fixture
 def next_id(next_id):
     return next_id(models.Utensil)
 
+
+# pylint: disable=arguments-differ, unused-variable
 class TestUtensils(utils.TestSubEndpoint):
     endpoint = 'utensils'
     E_404 = 'utensil not found'
@@ -79,8 +82,8 @@ class TestUtensils(utils.TestSubEndpoint):
 
     def test_get_recipes(self, client, recipes, utensils):
         expected = {'recipes': [utils.unorder_recipe(recipes[0])]}
-        id =  utensils[0]['id']
-        super(TestUtensils, self).test_get_recipes(client, id, expected)
+        r_id = utensils[0]['id']
+        super(TestUtensils, self).test_get_recipes(client, r_id, expected)
 
 
     def test_get_recipes_404(self, client, next_id):

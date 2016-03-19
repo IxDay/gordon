@@ -1,5 +1,5 @@
-import settings
-
+# pylint: disable=missing-docstring
+import lasagna.settings as settings
 
 settings.DATABASE['password'] = 'another_password'
 settings.DATABASE['host'] = 'another_database'

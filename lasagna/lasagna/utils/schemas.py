@@ -3,8 +3,8 @@ import collections
 
 import marshmallow as m
 
-import db.helpers
-import utils.exceptions as exc
+import lasagna.db.helpers as db_helpers
+import lasagna.utils.exceptions as exc
 
 FULLFIL_HELP = ('More info about fulfilling this entity here: '
                 'http://link/to/the/doc')
@@ -99,7 +99,7 @@ class PutMixin(m.Schema):
                 try:
                     data.update(self.__update__(data)._data)
                 except exc.APIException:
-                    raise m.ValidationError(db.helpers.CORRESPONDING, 'id')
+                    raise m.ValidationError(db_helpers.CORRESPONDING, 'id')
             else:
                 raise m.ValidationError(
                     m.fields.Field.default_error_messages['required'], 'id'
@@ -210,7 +210,7 @@ class Utensil(DefaultMixin):
 class UtensilPut(PutMixin, Utensil):
     """Utensil PUT method schema"""
 
-    __update__ = db.helpers.update_utensil
+    __update__ = db_helpers.update_utensil
 
 utensil_post = type('UtensilPost', (PostMixin, Utensil), {})()
 
@@ -224,7 +224,7 @@ class RecipeUtensils(NestedMixin, Utensil):
     """
 
     __nested__ = utensil_post
-    __get_or_insert__ = db.helpers.get_or_insert_utensils
+    __get_or_insert__ = db_helpers.get_or_insert_utensils
 
     @m.pre_dump
     def retrieve_internal(self, data):
@@ -281,7 +281,7 @@ class Ingredient(DefaultMixin):
 
 class IngredientPut(PutMixin, Ingredient):
     """Ingredient PUT method schema"""
-    __update__ = db.helpers.update_ingredient
+    __update__ = db_helpers.update_ingredient
 
 
 ingredient_post = type('IngredientPost', (PostMixin, Ingredient), {})()
@@ -295,7 +295,7 @@ class RecipeIngredients(NestedMixin, Ingredient):
     """
 
     __nested__ = ingredient_post
-    __get_or_insert__ = db.helpers.get_or_insert_ingrs
+    __get_or_insert__ = db_helpers.get_or_insert_ingrs
 
     quantity = m.fields.Integer(
         validate=m.validate.Range(0), required=True
@@ -425,7 +425,7 @@ class RecipePost(PostMixin, Recipe):
 
 class RecipePut(PutMixin, Recipe):
     """Schema for loading recipe from a PUT method"""
-    __update__ = db.helpers.update_recipe
+    __update__ = db_helpers.update_recipe
 
     utensils = m.fields.Nested(RecipeUtensils, many=True)
     ingredients = m.fields.Nested(RecipeIngredients, many=True)

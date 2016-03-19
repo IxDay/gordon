@@ -4,7 +4,7 @@ import itertools
 import functools
 
 import flask
-import utils.exceptions as exc
+import lasagna.utils.exceptions as exc
 
 
 Direction = collections.namedtuple('Direction', ['title', 'text'])

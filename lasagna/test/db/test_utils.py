@@ -1,10 +1,11 @@
+# pylint: disable=missing-docstring
 import time
 import threading
 
 import peewee
 
-import db
-import db.utils
+import lasagna.db as db
+import lasagna.db.utils as db_utils
 
 
 def test_lock_table(gen_table):
@@ -20,7 +21,7 @@ def test_lock_table(gen_table):
         )
 
         with db.database.atomic():
-            time.sleep(0.001) if wait else None
+            _ = time.sleep(0.001) if wait else None
             update_query(elt.id, new_name)
             results.append(list(get_rows()).pop())
 
@@ -42,7 +43,7 @@ def test_lock_table(gen_table):
 
     # second test with lock, order is inversed, as the first function takes
     # the lock first
-    c_1 = threading.Thread(target=db.utils.lock(test_table)(update),
+    c_1 = threading.Thread(target=db_utils.lock(test_table)(update),
                            args=(elt, 'foo_updated_1', True))
     c_2 = threading.Thread(target=update, args=(elt, 'foo_updated_2', False))
 

@@ -8,14 +8,14 @@ import os
 
 import flask
 
-import api.base as base
-import api.utensils as utensils
-import api.recipes as recipes
-import api.ingredients as ingredients
+import lasagna.api.base as base
+import lasagna.api.utensils as utensils
+import lasagna.api.recipes as recipes
+import lasagna.api.ingredients as ingredients
 
-import db
-import utils.exceptions as exc
-import utils.helpers as helpers
+import lasagna.db as db
+import lasagna.utils.exceptions as exc
+import lasagna.utils.helpers as helpers
 
 
 class Flask(flask.Flask):
@@ -53,8 +53,8 @@ def create_app(conf=None):
     conf = conf or {}
     app = Flask(__name__, static_folder=None)
 
-    app.config.from_object('settings')
-    app.config.from_pyfile('local_settings.py', silent=True)
+    app.config.from_object('lasagna.settings')
+    app.config.from_pyfile('lasagna.local_settings.py', silent=True)
     app.config.from_object(os.environ.get('LASAGNA_SETTINGS', None))
     app.config.from_envvar('LASAGNA_SETTINGS_FILE', silent=True)
     app.config.update(conf)

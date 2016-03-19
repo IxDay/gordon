@@ -7,8 +7,7 @@ Ensure that logs are not polluted with debug output
 
 Force application state to debug
 """
-# pylint: disable=import-self, no-member
-import settings
+import lasagna.settings as settings
 
 TESTING = True
 DEBUG = False

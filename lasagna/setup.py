@@ -23,8 +23,7 @@ def _get_readme():
 setuptools.setup(
     name='lasagna',
     version='0.1a1',
-    packages = setuptools.find_packages('src'),  # include all packages under src
-    package_dir = {'':'src'},   # tell distutils packages are under src
+    packages = setuptools.find_packages(exclude=['tests', 'tests.*']),
     author='John Doe',
     author_email='john@doe.com',
     description='Server for Gordon',

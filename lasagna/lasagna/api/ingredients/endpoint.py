@@ -2,14 +2,13 @@
 import flask
 import peewee
 
-import db
-import db.models as models
-import db.helpers
-import db.utils
+import lasagna.db as db
+import lasagna.db.models as models
+import lasagna.db.helpers as db_helpers
 
-import utils.exceptions as exc
-import utils.helpers
-import utils.schemas as schemas
+import lasagna.utils.exceptions as exc
+import lasagna.utils.helpers as helpers
+import lasagna.utils.schemas as schemas
 
 
 blueprint = flask.Blueprint('ingredients', __name__)
@@ -25,7 +24,7 @@ def ingredients_get():
 @db.database.atomic()
 def ingredients_post():
     """Create an ingredient"""
-    ingredient = utils.helpers.raise_or_return(schemas.ingredient.post)
+    ingredient = helpers.raise_or_return(schemas.ingredient.post)
     try:
         ingredient = models.Ingredient.create(**ingredient)
     except peewee.IntegrityError:
@@ -38,14 +37,14 @@ def ingredients_post():
 @db.database.atomic()
 def ingredients_put():
     """Update multiple ingredients"""
-    ingredients = utils.helpers.raise_or_return(schemas.ingredient.put, True)
+    ingredients = helpers.raise_or_return(schemas.ingredient.put, True)
     return schemas.ingredient.dump(ingredients, many=True).data
 
 
 @blueprint.route('/<int:ingredient_id>')
 def ingredient_get(ingredient_id):
     """Provide the ingredient for ingredient_id"""
-    ingredient = db.helpers.get(db.models.Ingredient, ingredient_id)
+    ingredient = db_helpers.get(db.models.Ingredient, ingredient_id)
     return schemas.ingredient.dump(ingredient).data
 
 
@@ -53,12 +52,12 @@ def ingredient_get(ingredient_id):
 @db.database.atomic()
 def ingredient_put(ingredient_id):
     """Update the ingredient for ingredient_id"""
-    ingredient = utils.helpers.raise_or_return(schemas.ingredient.put)
+    ingredient = helpers.raise_or_return(schemas.ingredient.put)
     if not ingredient:
         raise exc.APIException('no data provided for update')
 
     ingredient['id'] = ingredient_id
-    ingredient = db.helpers.update(models.Ingredient, ingredient)
+    ingredient = db_helpers.update(models.Ingredient, ingredient)
     return schemas.ingredient.dump(ingredient).data
 
 
@@ -67,13 +66,13 @@ def recipe_get(ingredient_id):
     """List all the recipes for ingredient_id"""
 
     # This ensure that the ingredient exists
-    db.helpers.get(models.Ingredient, ingredient_id)
+    db_helpers.get(models.Ingredient, ingredient_id)
 
     recipe_ids = (models.Recipe
                   .select(models.Recipe.id)
                   .join(models.RecipeIngredients)
                   .where(models.RecipeIngredients.ingredient == ingredient_id))
 
-    recipes = list(db.helpers.select_recipes(models.Recipe.id << recipe_ids))
+    recipes = list(db_helpers.select_recipes(models.Recipe.id << recipe_ids))
 
     return schemas.recipe.dump(recipes, many=True).data

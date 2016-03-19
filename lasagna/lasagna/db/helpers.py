@@ -4,10 +4,10 @@ import functools
 
 import peewee
 
-import db.models as models
+import lasagna.db.models as models
 
-import utils.helpers as helpers # pylint: disable=no-name-in-module
-import utils.exceptions as exc  # pylint: disable=no-name-in-module
+import lasagna.utils.helpers as helpers
+import lasagna.utils.exceptions as exc
 
 MULTIPLE = 'Multiple entries for the same element.'
 CORRESPONDING = 'No corresponding id in database.'

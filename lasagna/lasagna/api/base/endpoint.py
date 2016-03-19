@@ -6,6 +6,7 @@ blueprint = flask.Blueprint(
     'base', __name__, template_folder='templates', static_folder='static'
 )
 
+
 @blueprint.route('/')
 def index():
     """Display the index page"""

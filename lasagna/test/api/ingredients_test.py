@@ -1,4 +1,3 @@
-# pylint: disable=missing-docstring, redefined-outer-name
 import pytest
 
 import lasagna.db.models as models
@@ -10,7 +9,6 @@ def next_id(next_id):
     return next_id(models.Ingredient)
 
 
-# pylint: disable=arguments-differ, unused-variable
 class TestIngredients(utils.TestSubEndpoint):
     endpoint = 'ingredients'
     E_404 = 'ingredient not found'
@@ -20,7 +18,6 @@ class TestIngredients(utils.TestSubEndpoint):
         ingredients = {'ingredients': ingredients}
         super(TestIngredients, self).test_list(client, ingredients)
 
-
     def test_post(self, client, next_id):
         data = {'name': 'ingredient_1'}
         data_expected = {
@@ -28,17 +25,14 @@ class TestIngredients(utils.TestSubEndpoint):
         }
         super(TestIngredients, self).test_post(client, data, data_expected)
 
-
     def test_post_invalid(self, client):
         data = {'name': int()}
         errors = {'name': [utils.STRING]}
 
         super(TestIngredients, self).test_post_invalid(client, data, errors)
 
-
     def test_post_409(self, client, ingredient):
         super(TestIngredients, self).test_post_409(client, ingredient)
-
 
     def test_put_list(self, client, ingredients):
         ingredients[0]['name'] = 'ingredient_foo'
@@ -47,22 +41,18 @@ class TestIngredients(utils.TestSubEndpoint):
 
         super(TestIngredients, self).test_put_list(client, ingredients, exp)
 
-
     def test_get(self, client, ingredient):
         exp = {'ingredient': ingredient}
         super(TestIngredients, self).test_get(client, ingredient['id'], exp)
 
-
     def test_get_404(self, client, next_id):
         super(TestIngredients, self).test_get_404(client, next_id())
-
 
     def test_put(self, client, ingredient):
         ingredient['name'] = 'ingredient_foo'
         exp = {'ingredient': ingredient}
 
         super(TestIngredients, self).test_put(client, ingredient, exp)
-
 
     def test_put_invalid(self, client, next_id):
         data = [{'name': int()}, {'id': next_id()}]
@@ -72,17 +62,14 @@ class TestIngredients(utils.TestSubEndpoint):
         }
         super(TestIngredients, self).test_put_invalid(client, data, errors)
 
-
     def test_put_404(self, client, next_id):
         ingredient = {'id': next_id(), 'name': 'ingredient_1'}
         super(TestIngredients, self).test_put_404(client, ingredient)
-
 
     def test_get_recipes(self, client, recipes, ingredients):
         expected = {'recipes': [utils.unorder_recipe(recipes[0])]}
         r_id = ingredients[0]['id']
         super(TestIngredients, self).test_get_recipes(client, r_id, expected)
-
 
     def test_get_recipes_404(self, client, next_id):
         super(TestIngredients, self).test_get_recipes_404(client, next_id())

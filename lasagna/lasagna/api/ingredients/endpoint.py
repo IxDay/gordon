@@ -13,6 +13,7 @@ import lasagna.utils.schemas as schemas
 
 blueprint = flask.Blueprint('ingredients', __name__)
 
+
 @blueprint.route('')
 def ingredients_get():
     """List all ingredients"""

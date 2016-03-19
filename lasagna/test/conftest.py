@@ -1,5 +1,4 @@
 """Global py.test configuration"""
-# pylint: disable=unused-argument, protected-access, redefined-outer-name
 import os
 import collections
 import json
@@ -24,7 +23,7 @@ def app():
 
     Read the settings files in order to see available options.
     """
-    if not 'LASAGNA_SETTINGS' in os.environ:
+    if 'LASAGNA_SETTINGS' not in os.environ:
         os.environ['LASAGNA_SETTINGS'] = 'test.settings'
     return app_builder.create_app()
 
@@ -111,6 +110,7 @@ def gen_table(app):
     It also keeps tracks on it and remove it at the end of the test
     """
     tables = []
+
     def make_table(table):
         """Factory for creating and registering the given table"""
         table = type(table.__name__, (models.BaseModel, table,), {})
@@ -124,6 +124,7 @@ def gen_table(app):
 
     for table in tables:
         table.drop_table()
+
 
 @pytest.fixture
 def next_id(app):

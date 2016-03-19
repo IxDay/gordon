@@ -1,5 +1,3 @@
-# pylint: disable=missing-docstring, redefined-outer-name
-
 import pytest
 
 import lasagna.db.models as models
@@ -11,17 +9,14 @@ def next_id(next_id):
     return next_id(models.Utensil)
 
 
-# pylint: disable=arguments-differ, unused-variable
 class TestUtensils(utils.TestSubEndpoint):
     endpoint = 'utensils'
     E_404 = 'utensil not found'
     E_409 = 'utensil already exists'
 
-
     def test_list(self, client, utensils):
         utensils = {'utensils': utensils}
         super(TestUtensils, self).test_list(client, utensils)
-
 
     def test_post(self, client, next_id):
         data = {'name': 'utensil_1'}
@@ -38,10 +33,8 @@ class TestUtensils(utils.TestSubEndpoint):
 
         super(TestUtensils, self).test_post_invalid(client, data, errors)
 
-
     def test_post_409(self, client, utensil):
         super(TestUtensils, self).test_post_409(client, utensil)
-
 
     def test_put_list(self, client, utensils):
         utensils[0]['name'] = 'utensil_foo'
@@ -50,21 +43,17 @@ class TestUtensils(utils.TestSubEndpoint):
 
         super(TestUtensils, self).test_put_list(client, utensils, expected)
 
-
     def test_get(self, client, utensil):
         expected = {'utensil': utensil}
         super(TestUtensils, self).test_get(client, utensil['id'], expected)
 
-
     def test_get_404(self, client, next_id):
         super(TestUtensils, self).test_get_404(client, next_id())
-
 
     def test_put(self, client, utensil):
         utensil['name'] = 'utensil_foo'
         expected = {'utensil': utensil}
         super(TestUtensils, self).test_put(client, utensil, expected)
-
 
     def test_put_invalid(self, client, next_id):
         data = [{'name': int()}, {'id': next_id()}]
@@ -74,17 +63,14 @@ class TestUtensils(utils.TestSubEndpoint):
         }
         super(TestUtensils, self).test_put_invalid(client, data, errors)
 
-
     def test_put_404(self, client, next_id):
         utensil = {'id': next_id(), 'name': 'utensil_1'}
         super(TestUtensils, self).test_put_404(client, utensil)
-
 
     def test_get_recipes(self, client, recipes, utensils):
         expected = {'recipes': [utils.unorder_recipe(recipes[0])]}
         r_id = utensils[0]['id']
         super(TestUtensils, self).test_get_recipes(client, r_id, expected)
-
 
     def test_get_recipes_404(self, client, next_id):
         super(TestUtensils, self).test_get_recipes_404(client, next_id())

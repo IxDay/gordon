@@ -1,3 +1,2 @@
 """Ingredient blueprint folder"""
-from .endpoint import blueprint
-
+from .endpoint import blueprint  # noqa

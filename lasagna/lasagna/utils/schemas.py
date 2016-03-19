@@ -9,7 +9,9 @@ import lasagna.utils.exceptions as exc
 FULLFIL_HELP = ('More info about fulfilling this entity here: '
                 'http://link/to/the/doc')
 
-identity = lambda x: x
+
+def identity(x): return x
+
 
 ###############################################################################
 #                                                                             #
@@ -47,7 +49,6 @@ class DefaultMixin(m.Schema):
         key = self.get_envelope_key(many)
         return data if key is None else {key: data}
 
-
     def handle_error(self, errors, data):
         """Flatten errors in order to remove "_schema" entry"""
 
@@ -57,7 +58,6 @@ class DefaultMixin(m.Schema):
         for key in errors:
             if not errors[key]:
                 errors[key] = schema_errors.pop()
-
 
     class Meta(object):
         """Force error indexation"""
@@ -90,7 +90,6 @@ class PutMixin(m.Schema):
 
     __update__ = identity
 
-    # pylint: disable=protected-access
     @m.validates_schema(pass_original=True)
     def put_id_validator(self, data, original):
         """Ensure that an 'id' field is present when parsing many data"""
@@ -167,7 +166,6 @@ class NestedMixin(m.Schema):
                 errors[i + cpt].update(errs[i])
 
         raise m.ValidationError(errors)
-
 
     @m.validates_schema
     def validate_schema(self, data):
@@ -279,12 +277,14 @@ class Ingredient(DefaultMixin):
 
     name = m.fields.String()
 
+
 class IngredientPut(PutMixin, Ingredient):
     """Ingredient PUT method schema"""
     __update__ = db_helpers.update_ingredient
 
 
 ingredient_post = type('IngredientPost', (PostMixin, Ingredient), {})()
+
 
 class RecipeIngredients(NestedMixin, Ingredient):
     """Base schema for RecipeIngredients table
@@ -305,7 +305,6 @@ class RecipeIngredients(NestedMixin, Ingredient):
         required=True
     )
 
-    # pylint: disable=protected-access
     @m.pre_dump
     def retrieve_internal(self, data):
         """Flatten the data in order to avoid transitional entity
@@ -422,6 +421,7 @@ class RecipePost(PostMixin, Recipe):
         type('DirectionPost', (PostMixin, Direction), {}), many=True,
         missing=[]
     )
+
 
 class RecipePut(PutMixin, Recipe):
     """Schema for loading recipe from a PUT method"""

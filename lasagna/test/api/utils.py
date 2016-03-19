@@ -1,7 +1,5 @@
-# pylint: disable=missing-docstring
 import abc
 import lasagna.utils.helpers as helpers
-
 
 
 FULLFIL = ('More info about fulfilling this entity here: '
@@ -15,7 +13,9 @@ CORRESPONDING = 'No corresponding id in database.'
 
 dict_merge = helpers.dict_merge
 
-urlize = lambda *args: '/'.join([str(arg) for arg in args])
+
+def urlize(*args): return '/'.join([str(arg) for arg in args])
+
 
 def sanitize_recipe(recipe):
     for key in ['ingredients', 'utensils']:
@@ -55,7 +55,7 @@ class TestEndpoint(abc.ABC):
     def test_list(self, client, data_expected, cb=None):
         res = client.get(self.endpoint)
 
-        _ = cb(res.data) if cb else None
+        cb(res.data) if cb else None
         assert res.status_code == 200
         assert res.data == data_expected
 
@@ -63,7 +63,7 @@ class TestEndpoint(abc.ABC):
     def test_post(self, client, data, data_expected, cb=None):
         res = client.post(self.endpoint, data=data)
 
-        _ = cb(res.data) if cb else None
+        cb(res.data) if cb else None
         assert res.status_code == 201
         assert res.data == data_expected
 
@@ -97,7 +97,7 @@ class TestEndpoint(abc.ABC):
     def test_get(self, client, data_id, data_expected, cb=None):
         res = client.get('%s/%d' % (self.endpoint, data_id))
 
-        _ = cb(res.data) if cb else None
+        cb(res.data) if cb else None
         assert res.status_code == 200
         assert res.data == data_expected
 
@@ -123,11 +123,9 @@ class TestEndpoint(abc.ABC):
         assert res.data['message'] == 'request malformed'
         assert res.data['errors'] == errors
 
-
     def test_put_incorrect_json(self, client):
         endpoint = '%s/%d' % (self.endpoint, int())
         self._test_incorrect_json(client.put, endpoint)
-
 
     def test_put_empty_data(self, client):
         res = client.put('%s/%d' % (self.endpoint, int()), data={'foo': 'bar'})
@@ -144,6 +142,7 @@ class TestEndpoint(abc.ABC):
 
         assert res.status_code == 404
         assert res.data['message'] == self.E_404
+
 
 class TestSubEndpoint(TestEndpoint):
 

@@ -1,8 +1,6 @@
 """Database models
 
 Models from the database adapted to python through peewee ORM
-
-Due to non compliance with pylint we have a lot of exception in this file
 """
 import peewee
 
@@ -10,7 +8,6 @@ import lasagna.db as db
 import lasagna.db.orm as db_orm
 
 
-#pylint: disable=too-few-public-methods, no-member
 class BaseModel(peewee.Model):
     """Define the common model configuration"""
 
@@ -40,21 +37,19 @@ class BaseModel(peewee.Model):
         database = db.database
         schema = db.schema
 
-#pylint: disable=too-few-public-methods
+
 class Ingredient(BaseModel):
     """database's ingredient table"""
     id = peewee.PrimaryKeyField(sequence='ingredient_id_seq')
     name = peewee.CharField()
 
-#pylint: disable=too-few-public-methods
+
 class Utensil(BaseModel):
     """database's utensil table"""
     id = peewee.PrimaryKeyField(sequence='utensil_id_seq')
     name = peewee.CharField()
 
 
-
-#pylint: disable=too-few-public-methods
 class Recipe(BaseModel):
     """database's recipe table"""
     id = peewee.PrimaryKeyField(sequence='recipe_id_seq')
@@ -68,7 +63,6 @@ class Recipe(BaseModel):
     category = db_orm.EnumField(choices=['starter', 'main', 'dessert'])
 
 
-#pylint: disable=too-few-public-methods
 class RecipeIngredients(BaseModel):
     """database's recipe_ingredients table"""
     recipe = peewee.ForeignKeyField(
@@ -96,7 +90,6 @@ class RecipeIngredients(BaseModel):
         db_table = 'recipe_ingredients'
 
 
-#pylint: disable=too-few-public-methods
 class RecipeUtensils(BaseModel):
     """database's recipe_utensils table"""
     recipe = peewee.ForeignKeyField(

@@ -41,6 +41,7 @@ class Request(flask.Request):
             'request malformed', 400, {'errors': 'JSON is incorrect'}
         )
 
+
 def create_app(conf=None):
     """Set up the flask application
 
@@ -79,7 +80,6 @@ def create_app(conf=None):
         flask.g.database = db.database
         flask.g.database.connect()
 
-
     def db_close(_):
         """This hook ensures that the connection is closed when we've finished
         processing the request.
@@ -100,7 +100,6 @@ def create_app(conf=None):
 
         logger.setLevel(logging.DEBUG if app.config['DEBUG'] else logging.WARN)
         logger.addHandler(handler)
-
 
     # Register error handlers
     app.register_error_handler(exc.APIException, exc.dump_api_exc)

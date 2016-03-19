@@ -12,6 +12,7 @@ import lasagna.utils.exceptions as exc
 
 blueprint = flask.Blueprint('utensils', __name__, template_folder='templates')
 
+
 @blueprint.route('')
 @helpers.template({'text/html': 'utensils.html'})
 def utensils_get():

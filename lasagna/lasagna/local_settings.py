@@ -1,4 +1,3 @@
-# pylint: disable=missing-docstring
 import lasagna.settings as settings
 
 DEBUG = True

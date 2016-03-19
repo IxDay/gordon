@@ -15,7 +15,6 @@ The application API, this API will be public and used by the frontend.
 
 `py.test -vvv --tb=line --cov=lasagna/`
 `py.test -vvv --tb=line --cov=lasagna/ --cov-report=html`
-`pylint -r n $(cat misc/pylint_files)`
 
 
 ## Evaluate test running time

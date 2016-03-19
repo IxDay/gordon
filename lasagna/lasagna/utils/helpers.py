@@ -9,9 +9,11 @@ import lasagna.utils.exceptions as exc
 
 Direction = collections.namedtuple('Direction', ['title', 'text'])
 
+
 class JSONEncoder(flask.json.JSONEncoder):
     """Custom JSONEncoder"""
     pass
+
 
 def is_iterable(obj):
     """Checks if an object is iterable but not a string"""
@@ -32,6 +34,7 @@ def raise_or_return(schema, many=False):
 
     return data
 
+
 def unpack(value):
     """Return a three tuple of data, code, and headers"""
     if not isinstance(value, tuple):
@@ -49,6 +52,7 @@ def unpack(value):
         pass
 
     return value, 200, {}
+
 
 def template(mapping):
     """Template decorator
@@ -70,6 +74,7 @@ def template(mapping):
 
     return decorator
 
+
 def dict_merge(*dict_list):
     '''recursively merges dict's. not just simple a['key'] = b['key'], if
     both a and b have a key who's value is a dict then dict_merge is called
@@ -90,4 +95,3 @@ def dict_merge(*dict_list):
             result[key] = value
 
     return dict(result)
-

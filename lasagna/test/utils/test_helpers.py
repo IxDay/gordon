@@ -1,5 +1,3 @@
-# pylint: disable=missing-docstring
-
 import lasagna.utils.helpers as helpers
 
 
@@ -12,6 +10,7 @@ def test_unpack():
     assert helpers.unpack(('foo', 'bar', 'baz', 'quuz')) == (
         ('foo', 'bar', 'baz', 'quuz'), 200, {}
     )
+
 
 def test_dict_merge():
     a = {'jim': 123, 'a': {'b': {'c': {'d': 'bob'}}}, 'rob': 34}

@@ -12,6 +12,7 @@ import lasagna.utils.exceptions as exc
 MULTIPLE = 'Multiple entries for the same element.'
 CORRESPONDING = 'No corresponding id in database.'
 
+
 def _multiple_entries_error(errors, elts, msg):
     """Convenient method for adding error message in elt error list
 
@@ -25,7 +26,6 @@ def _multiple_entries_error(errors, elts, msg):
         errors[i]['id' if 'id' in elt else 'name'].append(msg)
 
 
-# pylint: disable=unnecessary-lambda, protected-access
 def _get(model, elts):
     """Retrieve elts from database
 
@@ -37,8 +37,8 @@ def _get(model, elts):
     This function ensure that we keep track of the element index in
     success and errors
     """
-    dd = lambda default: collections.defaultdict(default)
-    dm = lambda *args: helpers.dict_merge(*args)
+    dd = collections.defaultdict
+    dm = helpers.dict_merge
 
     ids, names, errors = dd(list), dd(list), dd(lambda: dd(list))
 
@@ -75,7 +75,6 @@ def _get(model, elts):
         elt = elt.pop()
         elts[elt['index']] = dm(obj._data, elt['elt'])
 
-
     for v in ids.values():
         if len(v) > 1:
             _multiple_entries_error(errors, v, MULTIPLE)
@@ -89,7 +88,7 @@ def _get(model, elts):
 
     return names, errors
 
-# pylint: disable=protected-access
+
 def _insert(model, elts, names):
     """Insert names into the database and add them to elts"""
     req = (model
@@ -112,12 +111,14 @@ def get_or_insert(model, elts):
 
     return elts, errors
 
+
 def get(model, pk):
     """Get a specific elt or raise 404 if it does not exists"""
     try:
         return model.get(model.id == pk)
     except peewee.DoesNotExist:
         raise exc.APIException('%s not found' % model._meta.name, 404)
+
 
 def update(model, value):
     """Update an elt and return it"""
@@ -196,10 +197,12 @@ def recipe_insert_utensils(recipe_id, utensils):
 
 def recipe_insert_ingredients(recipe_id, ingredients):
     """Insert the ingredients of a recipe into its intermediary table"""
-    ingr_builder = lambda ingr: {
-        'recipe': recipe_id, 'ingredient': ingr['id'],
-        'quantity': ingr['quantity'], 'measurement': ingr['measurement']
-    }
+    def ingr_builder(ingr):
+        return {
+            'recipe': recipe_id, 'ingredient': ingr['id'],
+            'quantity': ingr['quantity'], 'measurement': ingr['measurement']
+        }
+
     recipe_ingredients = [ingr_builder(ingr) for ingr in ingredients]
     if recipe_ingredients:
         models.RecipeIngredients.insert_many(recipe_ingredients).execute()

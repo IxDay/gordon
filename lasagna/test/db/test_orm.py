@@ -1,8 +1,8 @@
-# pylint: disable=missing-docstring
 import peewee
 import pytest
 
 import lasagna.db.orm as db_orm
+
 
 def test_enum(gen_table):
     class TestTable(peewee.Model):
@@ -60,7 +60,6 @@ def test_array_of_ints(gen_table):
     class TestTable(peewee.Model):
         integers = db_orm.ArrayField(peewee.IntegerField)
 
-
     test_table = gen_table(TestTable)
 
     test_table.create(integers=[1, 2, 3])
@@ -73,11 +72,9 @@ def test_array_of_chars(gen_table):
     class TestTable(peewee.Model):
         chars = db_orm.ArrayField(peewee.CharField)
 
-
     test_table = gen_table(TestTable)
 
     test_table.create(chars=['foo', 'bar'])
     res = test_table.select(test_table).execute().next()
 
     assert res.chars == ['foo', 'bar']
-

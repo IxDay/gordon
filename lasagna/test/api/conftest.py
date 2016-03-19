@@ -1,32 +1,39 @@
-# pylint: disable=missing-docstring, redefined-outer-name
 import pytest
+
 
 def utensil_post(client, data):
     return client.post('utensils', data=data).data['utensil']
 
+
 def ingredient_post(client, data):
     return client.post('ingredients', data=data).data['ingredient']
+
 
 def recipe_post(client, data):
     return client.post('recipes', data=data).data['recipe']
 
+
 @pytest.fixture
 def utensil(client):
     return utensil_post(client, {'name': 'utensil_1'})
+
 
 @pytest.fixture
 def utensils(client):
     return [utensil_post(client, {'name': 'utensil_1'}),
             utensil_post(client, {'name': 'utensil_2'})]
 
+
 @pytest.fixture
 def ingredient(client):
     return ingredient_post(client, {'name': 'ingredient_1'})
+
 
 @pytest.fixture
 def ingredients(client):
     return [ingredient_post(client, {'name': 'ingredient_1'}),
             ingredient_post(client, {'name': 'ingredient_2'})]
+
 
 @pytest.fixture
 def recipe(client, ingredients, utensils):
@@ -49,6 +56,7 @@ def recipe(client, ingredients, utensils):
             }
         ]
     })
+
 
 @pytest.fixture
 def recipes(client, recipe):

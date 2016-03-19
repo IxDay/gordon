@@ -1,4 +1,3 @@
-# pylint: disable=missing-docstring
 import time
 import threading
 
@@ -15,13 +14,18 @@ def test_lock_table(gen_table):
         name = peewee.CharField()
 
     def update(elt, new_name, wait=False):
-        get_rows = lambda: test_table.select(test_table.name).dicts().execute()
-        update_query = lambda id, name: (
-            test_table.update(name=name).where(test_table.id == id).execute()
-        )
+
+        def get_rows():
+            return test_table.select(test_table.name).dicts().execute()
+
+        def update_query(id, name):
+            return (test_table
+                    .update(name=name)
+                    .where(test_table.id == id)
+                    .execute())
 
         with db.database.atomic():
-            _ = time.sleep(0.001) if wait else None
+            time.sleep(0.001) if wait else None
             update_query(elt.id, new_name)
             results.append(list(get_rows()).pop())
 

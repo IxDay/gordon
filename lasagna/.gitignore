@@ -1,4 +1,7 @@
 src/local_settings.py
+
+htmlcov
+
 .cache
 .coverage
-htmlcov
+.eggs

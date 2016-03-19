@@ -1,12 +1,13 @@
-# pylint: disable=missing-docstring, redefined-outer-name
 import pytest
 
 import lasagna.db.models as models
 import test.api.utils as utils
 
+
 @pytest.fixture
 def next_utensil_id(next_id):
     return next_id(models.Utensil)
+
 
 @pytest.fixture
 def next_recipe_id(next_id):
@@ -65,7 +66,6 @@ def recipe_tmp_3(utensils):
             {'name': 'utensil_2'}
         ]
     }
-
 
 
 @pytest.fixture
@@ -208,7 +208,7 @@ def recipe_invalid(utensils, ingredients):
             '2': {
                 'name': [{'msg': utils.MULTIPLE, 'id': 1, 'name': 'utensil_1'}]
             },
-            '3': {'name' : [utils.MULTIPLE]},
+            '3': {'name': [utils.MULTIPLE]},
             '4': {'name': [utils.MULTIPLE]},
             '5': {'id': [utils.MULTIPLE, utils.CORRESPONDING]},
             '6': {'id': [utils.MULTIPLE, utils.CORRESPONDING]},
@@ -261,6 +261,7 @@ def recipe_invalid(utensils, ingredients):
         }
     }
 
+
 @pytest.fixture
 def recipe_invalids(recipe_invalid, next_utensil_id):
     recipe_invalid_2 = {
@@ -279,14 +280,14 @@ def recipe_invalids(recipe_invalid, next_utensil_id):
     }
     return [recipe_invalid, recipe_invalid_2]
 
-# pylint: disable=arguments-differ, unused-variable
+
 class TestRecipes(utils.TestEndpoint):
     endpoint = 'recipes'
     E_404 = 'recipe not found'
     E_409 = 'recipe already exists'
 
     def test_list(self, client, recipes):
-        unorder = lambda rcps: [utils.unorder_recipe(rcp) for rcp in rcps]
+        def unorder(rcps): return [utils.unorder_recipe(rcp) for rcp in rcps]
 
         super(TestRecipes, self).test_list(
             client, {'recipes': unorder(recipes)},
@@ -294,7 +295,7 @@ class TestRecipes(utils.TestEndpoint):
         )
 
     def test_post(self, client, recipes_valid):
-        edit_data = lambda data: utils.sanitize_recipe(data['recipe'])
+        def edit_data(data): return utils.sanitize_recipe(data['recipe'])
 
         for recipe, expected in recipes_valid:
             super(TestRecipes, self).test_post(
@@ -324,7 +325,6 @@ class TestRecipes(utils.TestEndpoint):
         expected = {'recipes': [recipe_1_expected, recipe_2]}
         super(TestRecipes, self).test_put_list(client, recipes, expected)
 
-
     def test_get(self, client, recipe):
         super(TestRecipes, self).test_get(
             client, recipe['id'], {'recipe': utils.unorder_recipe(recipe)},
@@ -338,8 +338,8 @@ class TestRecipes(utils.TestEndpoint):
         recipe['name'] = 'recipe_foo'
         expected = utils.dict_merge(recipe)
 
-        utensils = recipe.pop('utensils')
-        ingredients = recipe.pop('ingredients')
+        recipe.pop('utensils')
+        recipe.pop('ingredients')
         recipe.pop('directions')
         super(TestRecipes, self).test_put(client, recipe, {'recipe': expected})
 
@@ -367,7 +367,6 @@ class TestRecipes(utils.TestEndpoint):
         assert res.status_code == 404
         assert res.data == {'status_code': 404, 'message': self.E_404}
 
-
     def test_get_ingredients(self, client, recipe):
         r_id = recipe['id']
         res = client.get(utils.urlize(self.endpoint, r_id, 'ingredients'))
@@ -383,11 +382,9 @@ class TestRecipes(utils.TestEndpoint):
         assert res.status_code == 404
         assert res.data == {'status_code': 404, 'message': self.E_404}
 
-
     def test_get_utensils(self, client, recipe):
         r_id = recipe['id']
         res = client.get(utils.urlize(self.endpoint, r_id, 'utensils'))
 
         assert res.status_code == 200
         assert res.data == {'utensils': recipe['utensils']}
-

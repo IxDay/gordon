@@ -7,16 +7,16 @@ import peewee
 import lasagna.db as db
 
 
-# pylint: disable=protected-access
 def parse_entity(*path):
     """Parse the db entity and return the correct string"""
     entity = peewee.Entity(*path)
     return db.database.compiler()._parse_entity(entity, None, None)[0]
 
-# pylint: disable=protected-access
+
 def model_entity(model):
     """Get the entity of a model (basically 'schema'.'table_name')"""
     return parse_entity(model._meta.schema, model._meta.db_table)
+
 
 def lock(*models):
     """Lock table to avoid race conditions"""

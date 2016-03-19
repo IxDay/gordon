@@ -14,7 +14,6 @@ import lasagna.utils.exceptions as exc
 blueprint = flask.Blueprint('recipes', __name__, template_folder='templates')
 
 
-
 @blueprint.route('')
 @helpers.template({'text/html': 'recipes.html'})
 def recipes_get():
@@ -28,7 +27,6 @@ def recipes_get():
 def recipes_post():
     """Create a recipe"""
     recipe = helpers.raise_or_return(schemas.recipe.post)
-
 
     utensils = recipe.pop('utensils')
     ingredients = recipe.pop('ingredients')

@@ -9,17 +9,8 @@ RUN apt-get update && \
     apt-get install -y python3.4 python3-pip libpq-dev && \
     apt-get clean
 
-COPY lasagna/requirements.txt /opt/requirements/
-COPY lasagna/requirements-tests.txt /opt/requirements/
-COPY lasagna/misc/default_app.py /opt/lasagna/src/app.py
-
 ENV PYTHONDONTWRITEBYTECODE 1
-
 ENV WORKDIR /opt/lasagna
-ENV PYTHONPATH ${WORKDIR}/src
-
-RUN pip3 install -r /opt/requirements/requirements.txt
-RUN pip3 install -r /opt/requirements/requirements-tests.txt
 
 EXPOSE 5000
 

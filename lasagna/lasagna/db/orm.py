@@ -6,6 +6,7 @@ import playhouse
 
 import lasagna.utils.helpers as helpers
 
+
 class EnumField(peewee.Field):
     """Enum field
 

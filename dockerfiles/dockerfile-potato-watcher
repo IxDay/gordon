@@ -1,0 +1,26 @@
+# DBwatcher
+#
+# VERSION               0.0.1
+
+FROM       debian:testing
+MAINTAINER Maxime Vidori <maxime.vidori@gmail.com>
+
+RUN apt-get update && \
+    apt-get install -y postgresql-client postgresql-autodoc graphviz && \
+    apt-get clean
+
+ENV PGPASSFILE /tmp/.pgpass
+ENV PGHOST db
+ENV PGDATABASE potato
+ENV PGUSER potato
+
+
+ARG PASSWORD
+
+RUN echo "*:*:${PGDATABASE}:${PGUSER}:${PASSWORD}" >  ${PGPASSFILE}
+RUN echo "*:*:potato_test:${PGUSER}:${PASSWORD}" >> ${PGPASSFILE}
+RUN echo "*:*:template1:${PGUSER}:${PASSWORD}"     >> ${PGPASSFILE}
+
+RUN chmod 600 ${PGPASSFILE}
+
+WORKDIR /mnt

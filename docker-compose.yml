@@ -5,23 +5,23 @@ services:
         - "5432:5432"
     build:
       context: .
-      dockerfile: dockerfiles/Dockerfile-DB
+      dockerfile: dockerfiles/dockerfile-potato
       args:
         - PASSWORD=${DB_PASSWORD}
   dbwatcher:
     volumes:
-      - ./rulzurdb:/mnt/
+      - ./potato:/mnt/
     links:
       - db
     build:
       context: .
-      dockerfile: dockerfiles/Dockerfile-DBwatcher
+      dockerfile: dockerfiles/dockerfile-potato-watcher
       args:
         - PASSWORD=${DB_PASSWORD}
   api:
     volumes:
-      - ./rulzurapi:/opt/rulzurapi
-      - ./rulzurfront/dist:/opt/rulzurapi/src/api/base/static
+      - ./lasagna:/opt/lasagna
+      - ./dessert/dist:/opt/lasagna/src/api/base/static
     links:
       - db
     ports:
@@ -31,10 +31,10 @@ services:
     tty: true
     build:
       context: .
-      dockerfile: dockerfiles/Dockerfile-API
+      dockerfile: dockerfiles/dockerfile-lasagna
   front:
     volumes:
-      - ./rulzurfront:/opt/rulzurfront
+      - ./dessert:/opt/dessert
     build:
       context: .
-      dockerfile: dockerfiles/Dockerfile-Front
+      dockerfile: dockerfiles/dockerfile-dessert

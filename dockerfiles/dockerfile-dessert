@@ -1,0 +1,17 @@
+# dessert
+#
+# VERSION               0.0.1
+
+FROM       debian:testing
+MAINTAINER Maxime Vidori <maxime.vidori@gmail.com>
+
+RUN apt-get update && \
+    apt-get install -y nodejs npm && \
+    apt-get clean
+
+RUN ln -s /usr/bin/nodejs /usr/local/bin/node
+
+RUN npm install -g gulp
+
+WORKDIR /opt/dessert
+ENTRYPOINT ["gulp"]

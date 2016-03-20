@@ -27,7 +27,7 @@ setuptools.setup(
     },
     entry_points='''
         [console_scripts]
-        lasagna=lasagna.cli:main
+        lasagna = lasagna.cli:main [dev]
     ''',
     url='https://github.com/IxDay/gordon',
     license='MIT',

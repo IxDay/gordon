@@ -1,6 +1,6 @@
 version: "2"
 services:
-  db:
+  potato:
     ports:
         - "5432:5432"
     build:
@@ -8,22 +8,22 @@ services:
       dockerfile: dockerfiles/dockerfile-potato
       args:
         - PASSWORD=${DB_PASSWORD}
-  dbwatcher:
+  potatowatcher:
     volumes:
       - ./potato:/mnt/
     links:
-      - db
+      - potato
     build:
       context: .
       dockerfile: dockerfiles/dockerfile-potato-watcher
       args:
         - PASSWORD=${DB_PASSWORD}
-  api:
+  lasagna:
     volumes:
       - ./lasagna:/opt/lasagna
       - ./dessert/dist:/opt/lasagna/lasagna/api/base/static
     links:
-      - db
+      - potato
     ports:
       - "5000:5000"
     command: /bin/bash
@@ -32,7 +32,7 @@ services:
     build:
       context: .
       dockerfile: dockerfiles/dockerfile-lasagna
-  front:
+  dessert:
     volumes:
       - ./dessert:/opt/dessert
     build:

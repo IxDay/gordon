@@ -16,14 +16,14 @@ Connect to database
 It is possible to interact directly with the database through a shell,
 by running the following commands:
 
-* ``docker-compose run dbwatcher bash``: start and attach the watcher.
+* ``docker-compose run potatowatcher bash``: start and attach the watcher.
 * ``./helper.sh``: connect to the database.
 
 
 Consult volumes (logs, config)
 ------------------------------
 
-To consult volumes we only have to connect the rulzurdb volumes to a simple
+To consult volumes we only have to connect the potato volumes to a simple
 container: `docker run --rm --volumes-from potato -ti busybox sh`
 
 The files will be available in the place where volumes were mounted in

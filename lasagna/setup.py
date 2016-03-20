@@ -1,15 +1,4 @@
-import codecs
-import os
 import setuptools
-
-
-def _get_readme():
-    readme_path = '%s/%s' % (
-        os.path.dirname(os.path.abspath(__file__)), 'README.md'
-    )
-
-    with codecs.open(readme_path, 'r', encoding='utf8') as f:
-        return f.read()
 
 
 setuptools.setup(
@@ -19,7 +8,6 @@ setuptools.setup(
     author='John Doe',
     author_email='john@doe.com',
     description='Server for Gordon',
-    long_description=_get_readme(),
     install_requires=[
         'flask',
         'peewee>=2.6.2',

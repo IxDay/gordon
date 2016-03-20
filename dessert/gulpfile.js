@@ -32,7 +32,7 @@ gulp.task('scripts', function () {
   .pipe(gulp.dest('dist'));
 });
 
-gulp.task('sass:watch', function () {
+gulp.task('watch:styles', function () {
   gulp.watch('src/styles/**/*.scss', ['styles']);
 });
 
@@ -45,3 +45,4 @@ gulp.task('test', function () {
 });
 
 gulp.task('build', sequence('clean', ['styles', 'scripts', 'fonts']));
+gulp.task('default', ['build']);

@@ -24,6 +24,10 @@ gulp.task('fonts', function() {
   return gulp.src('src/fonts/**').pipe(gulp.dest('dist/fonts'));
 });
 
+gulp.task('favicon', function() {
+  return gulp.src('src/favicon.ico').pipe(gulp.dest('dist'));
+});
+
 gulp.task('scripts', function () {
   return gulp.src('src/scripts/**/*.js')
   .pipe(sourcemaps.init())
@@ -44,5 +48,5 @@ gulp.task('test', function () {
   // do nothing...
 });
 
-gulp.task('build', sequence('clean', ['styles', 'scripts', 'fonts']));
+gulp.task('build', sequence('clean', ['styles', 'scripts', 'fonts', 'favicon']));
 gulp.task('default', ['build']);

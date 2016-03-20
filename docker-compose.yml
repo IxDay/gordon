@@ -21,7 +21,7 @@ services:
   api:
     volumes:
       - ./lasagna:/opt/lasagna
-      - ./dessert/dist:/opt/lasagna/src/api/base/static
+      - ./dessert/dist:/opt/lasagna/lasagna/api/base/static
     links:
       - db
     ports:

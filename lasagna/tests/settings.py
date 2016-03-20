@@ -13,6 +13,6 @@ TESTING = True
 DEBUG = False
 
 
-settings.DATABASE['host'] = 'db'
+settings.DATABASE['host'] = 'potato'
 settings.DATABASE['database'] = 'potato_test'
 settings.DATABASE['password'] = 'password'

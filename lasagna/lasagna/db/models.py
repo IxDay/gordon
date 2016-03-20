@@ -54,6 +54,7 @@ class Recipe(BaseModel):
     """database's recipe table"""
     id = peewee.PrimaryKeyField(sequence='recipe_id_seq')
     name = peewee.CharField()
+    description = peewee.TextField()
     directions = db_orm.ArrayField(db_orm.DirectionField)
     difficulty = peewee.IntegerField()
     duration = db_orm.EnumField(choices=[

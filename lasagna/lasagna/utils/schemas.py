@@ -392,6 +392,7 @@ class Recipe(DefaultMixin):
     }
 
     name = m.fields.String()
+    description = m.fields.String()
     people = m.fields.Integer(
         validate=m.validate.Range(1, 12)
     )
@@ -412,6 +413,12 @@ class Recipe(DefaultMixin):
     utensils = m.fields.Nested(RecipeUtensils, many=True, default=[])
     ingredients = m.fields.Nested(RecipeIngredients, many=True, default=[])
 
+    @m.post_dump
+    def remove_desc(self, data):
+        """Shitty fixes"""
+        if data['description'] is None:
+            data.pop('description')
+
 
 class RecipePost(PostMixin, Recipe):
     """Schema for loading recipe from a POST method"""
@@ -421,6 +428,10 @@ class RecipePost(PostMixin, Recipe):
         type('DirectionPost', (PostMixin, Direction), {}), many=True,
         missing=[]
     )
+
+    def __init__(self, *args, **kwargs):
+        super(RecipePost, self).__init__(*args, **kwargs)
+        self.fields['description'].required = False
 
 
 class RecipePut(PutMixin, Recipe):

@@ -28,10 +28,11 @@ INSERT INTO utensil (name) VALUES ('utensil_9');
 
 -- insert a few number of recipes
 INSERT INTO
-recipe (name, directions, difficulty, duration, people, category)
+recipe (name, description, directions, difficulty, duration, people, category)
 VALUES
 (
     'recipe_1',
+    'description recipe 1',
     '{
         "(step_1, instructions recipe 1 step 1)",
         "(step_2, instructions recipe 1 step 2)",
@@ -45,10 +46,11 @@ VALUES
 );
 
 INSERT INTO
-recipe (name, directions, difficulty, duration, people, category)
+recipe (name, description, directions, difficulty, duration, people, category)
 VALUES
 (
     'recipe_2',
+    'description recipe 2',
     '{
         "(step_1, instructions recipe 2 step 1)",
         "(step_2, instructions recipe 2 step 2)",

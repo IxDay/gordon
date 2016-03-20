@@ -31,6 +31,7 @@ def recipe_tmp_2(utensils):
     return {
         'name': 'recipe_2', 'difficulty': 1, 'people': 2, 'duration': '0/5',
         'category': 'starter',
+        'description': 'foo',
         'directions': [], 'ingredients': [],
         'utensils': [
             {'id': utensils[0]['id']},
@@ -39,7 +40,7 @@ def recipe_tmp_2(utensils):
     }, {
         'id': 2, 'name': 'recipe_2', 'difficulty': 1, 'people': 2,
         'duration': '0/5', 'category': 'starter', 'directions': [],
-        'ingredients': [],
+        'ingredients': [], 'description': 'foo',
         'utensils': [
             {'name': 'utensil_1'},
             {'name': 'utensil_2'}
@@ -145,6 +146,7 @@ def recipe_invalid(utensils, ingredients):
         'name': int(),
         'difficulty': str(),
         'people': int(),
+        'description': int(),
         'duration': 'foo',
         'category': 'bar',
         'directions': [
@@ -190,6 +192,7 @@ def recipe_invalid(utensils, ingredients):
         ]
     }, {
         'name': [utils.STRING],
+        'description': [utils.STRING],
         'difficulty': [utils.INTEGER],
         'people': ['Must be between 1 and 12.'],
         'category': [utils.CHOICE],

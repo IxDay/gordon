@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS utensil (
 
 CREATE TABLE IF NOT EXISTS recipe (
     id serial PRIMARY KEY,
+    description text,
     name varchar(50) UNIQUE NOT NULL,
     directions direction[],
     difficulty smallint CONSTRAINT difficulty_borders CHECK

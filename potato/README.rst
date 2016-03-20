@@ -17,7 +17,7 @@ It is possible to interact directly with the database through a shell,
 by running the following commands:
 
 * ``docker-compose run potatowatcher bash``: start and attach the watcher.
-* ``./helper.sh``: connect to the database.
+* ``make connect``: connect to the database.
 
 
 Consult volumes (logs, config)

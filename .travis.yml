@@ -16,7 +16,7 @@ install:
   - pip install -e .[tests]
 
 before_script:
-  - ../potato/travis.sh
+  - cd ../potato && make travis_init && cd -
 
 script:
   - flake8 lasagna tests

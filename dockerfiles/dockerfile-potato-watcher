@@ -6,11 +6,11 @@ FROM       debian:testing
 MAINTAINER Maxime Vidori <maxime.vidori@gmail.com>
 
 RUN apt-get update && \
-    apt-get install -y postgresql-client postgresql-autodoc graphviz && \
+    apt-get install -y postgresql-client postgresql-autodoc graphviz make && \
     apt-get clean
 
 ENV PGPASSFILE /tmp/.pgpass
-ENV PGHOST db
+ENV PGHOST potato
 ENV PGDATABASE potato
 ENV PGUSER potato
 

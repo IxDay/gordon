@@ -38,13 +38,15 @@ Now we can bring the development environment up.
   database.
 
 * Then, fulfill the database by bringing the database helper container up:
-  ``docker-compose run potatowatcher bash`` and now run the helper script:
-  ``./helper.sh full_reinitialize``, you will see a lot of sql statements.
-  Verify that everything is fine by connecting to the dabase for example
-  (by typing ``./helper.sh``) and exit the container with the ``exit`` command.
+  ``docker-compose run potatowatcher bash`` and now run the ``Makefile``
+  initialization: ``make init``, you will see some indications.
+  Verify that everything is fine by connecting to the dabase for
+  example (by typing ``make connect``) and exit the container with
+  the ``exit`` command.
 
 * Install frontend dependencies by connecting to the container:
-  ``docker-compose run --entrypoint /bin/bash front`` and typing ``npm install``
+  ``docker-compose run --entrypoint /bin/bash front`` and typing
+  ``npm install``
 
 * Generate the assets by typing: ``docker-compose run front build``
 
@@ -80,12 +82,11 @@ of helpers tools which are also containerized
 * **potato** this container runs the PostgreSQL database, it is automatically
   started and should not be modified or directly accessed.
 
-* **potatowatcher** this is the database helper, it provides some scripts
-  to access or initialized it, notably the
-  `helper.sh file <./potato/helper.sh>`__
+* **potatowatcher** this is the database helper, it provides a
+  `Makefile <./potato/Makefile`__ to access or initialized it.
 
-* **lasagna** the main container you will attach, contains the core application:
-  `lasagna` and tools for development.
+* **lasagna** the main container you will attach, contains the core i
+  application: `lasagna` and tools for development.
 
 * **dessert** a simple container which generates the assets (css, javascript),
   it provides an entrypoint for `gulp <http://gulpjs.com/>`__ which is the
